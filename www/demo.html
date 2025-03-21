@@ -162,8 +162,21 @@
 		function renderPath(points) {
 			if (!points.length) return;
 			ctx.moveTo(points[0].x, points[0].y);
-			for(var i = 1; i < points.length; i++)
-				ctx.lineTo(points[i].x, points[i].y);
+			for(var i = 1; i < points.length; i++) {
+				 ctx.lineTo(points[i].x, points[i].y);
+			}
+			const imgData = ctx.getImageData(0, 0, c.width, c.height);
+   for (let i = 0; i < imgData.data.length; i += 4) {
+				 var y = parseInt(i/4/c.width);
+					var x = i/4 - y*c.width;
+			  if (ctx.isPointInPath(x, y) && imgData.data[i+3] == 0) {
+						 imgData.data[i] = 255;
+						 imgData.data[i+1] = 0;
+						 imgData.data[i+2] = 255;
+							imgData.data[i+3] = 255;
+				 }
+   }
+			ctx.putImageData(imgData, 0, 0);
 			ctx.closePath();
 		}
 
