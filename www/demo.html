@@ -111,8 +111,8 @@
 		
 		const imgData = ctx.getImageData(0, 0, c.width, c.height);
   for (let i = 0; i < imgData.data.length; i += 4) {
-			 if (imgData.data[i] == 255 && imgData.data[i+1] == 255 && imgData.data[i+2] == 255) {
-      imgData.data[i+3] = 0;
+			 if ((imgData.data[i] == imgData.data[i+1]) && (imgData.data[i+1] == imgData.data[i+2]) && (imgData.data[i+2] == imgData.data[i])) {
+      imgData.data[i+3] = 255-Math.round((imgData.data[i] + imgData.data[i+1] + imgData.data[i+2]) / 3);
 				}
   }
   ctx.putImageData(imgData, 0, 0);
