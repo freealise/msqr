@@ -48,6 +48,7 @@
 
 	img.onload = update;
 	img.src = "gfx/e_violin.png";
+	var imgData;
 
 	function optionHandler(e) {
 		switch(e.id) {
@@ -110,7 +111,7 @@
 		ctx.drawImage(img, -img.width * 0.5, -img.height * 0.5);
 		ctx.setTransform(1, 0, 0, 1, 0, 0);
 		
-		const imgData = ctx.getImageData(0, 0, c.width, c.height);
+		imgData = ctx.getImageData(0, 0, c.width, c.height);
   for (let i = 0; i < imgData.data.length; i += 4) {
 			 if ((imgData.data[i] >= options.threshold) && (imgData.data[i+1] >= options.threshold) && (imgData.data[i+2] >= options.threshold)) {
       imgData.data[i+3] = 0;
@@ -143,6 +144,7 @@
 			ctx.beginPath();
 			ctx.lineWidth = 1;
 			paths.forEach(renderPath);
+			ctx.putImageData(imgData, 0, 0);
 			ctx.strokeStyle = "#fff";
 			ctx.stroke();
 
@@ -165,7 +167,6 @@
 			for(var i = 1; i < points.length; i++) {
 				 ctx.lineTo(points[i].x, points[i].y);
 			}
-			const imgData = ctx.getImageData(0, 0, c.width, c.height);
    for (let i = 0; i < imgData.data.length; i += 4) {
 				 var y = parseInt(i/4/c.width);
 					var x = i/4 - y*c.width;
@@ -176,7 +177,6 @@
 							imgData.data[i+3] = 255;
 				 }
    }
-			ctx.putImageData(imgData, 0, 0);
 			ctx.closePath();
 		}
 
