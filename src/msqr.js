@@ -123,6 +123,7 @@ function MSQR(src, options) {
 				ctx.fill();
 				ctx.stroke();
 				
+				try {
 				imgData = ctx.getImageData(0, 0, c.width, c.height);
 				for (let i = 0; i < imgData.data.length; i += 4) {
 			   if (imgData.data[i] == 0 && imgData.data[i+1] == 0 && imgData.data[i+2] == 0 && holes[i/4] === true) {
@@ -135,6 +136,7 @@ function MSQR(src, options) {
 							}
 					}
 					ctx.putImageData(imgData, 0, 0);
+					} catch(e) {alert(e);}
 			}
 		}
 		while(path.length && --max);
