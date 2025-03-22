@@ -32,7 +32,7 @@
  * @returns {Array} Holds arrays with points for each shape, or if path2D=true an Path2D object for each shape
  * @static
  */
-function MSQR(src, options, holes) {
+function MSQR(src, options) {
 
 	"use strict";
 
@@ -123,6 +123,7 @@ function MSQR(src, options, holes) {
 				ctx.fill();
 				ctx.stroke();
 				
+				ctx.globalCompositeOperation = "source-over";
 				imgData = ctx.getImageData(0, 0, c.width, c.height);
 				for (let i = 0; i < imgData.data.length; i += 4) {
 			   if (holes[i/4] === true && imgData.data[i] == 0 && imgData.data[i+1] == 0 && imgData.data[i+2] == 0 && imgData.data[i+3] == 0) {
@@ -135,6 +136,7 @@ function MSQR(src, options, holes) {
 							}
 					}
 					ctx.putImageData(imgData, 0, 0);
+					ctx.globalCompositeOperation = "destination-out";
 			}
 		}
 		while(path.length && --max);
