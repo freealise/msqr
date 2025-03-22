@@ -127,7 +127,7 @@
 	function trace() {
 
 		var time1 = performance.now(),
-			paths = MSQR(ctx, options),
+			paths = MSQR(ctx, options, holes),
 			time = performance.now() - time1,
 			cnt = 0;
 
